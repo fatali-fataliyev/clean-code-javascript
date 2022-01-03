@@ -19,7 +19,7 @@
 
 ![Proqram keyfiyyətinin qiymətləndirilməsinin yumoristik təsviri.](https://www.osnews.com/images/comics/wtfm.jpg)
 
-Bu yazı Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək] kimi prinsipləri öyrədib və, bu tiplərdə proqram təminatı yaratmaq üçün bir bələdçidir. (https://github.com/ryanmcdermott/3rs-of-software-architecture).
+Bu məqalə Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək] kimi prinsipləri öyrədib və, bu tiplərdə proqram təminatı yaratmaq üçün bir bələdçidir. (https://github.com/ryanmcdermott/3rs-of-software-architecture).
 
 Sizdən buradakı hər bir prinsipə ciddi şəkildə əməl etmək tələb olunmur, burada olan məsləhətlər yanlnız kodunuz daha oxunaqlı və səliqəli etmək üçün _Clean Code_ müəlliflərı tərəfindən uzun illik təcrübələrə əsaslanan faydalı məsləhətlərdir.
 
@@ -27,31 +27,31 @@ Proqram mühəndisliyi peşəmiz 50 yaşının bir az üstündədir və biz həl
 
 
 
-QEYD: Bu məsləhətləri bilmək sizi dərhal daha yaxşı proqram mühəndisi etmir, və bu məsləhətləri tətbiq etdiyinizdə səhviniz olmayacaq mənasına gəlmir.
+QEYD: Bu məsləhətləri bilmək sizi dərhal daha yaxşı bir proqram mühəndisi etmir, və bu məsləhətləri tətbiq etdiyinizdə yazdığınız kod səhvsiz olacaq mənasına gəlmir.
 
-Hər bir kod parçası ilk olaraq qaralama kimi başlayır, məsələn: yaş gil quruyub son formasını alıb saxsı olur. Eyni ilə proqram təminatındada həmyaşıdlarımızla birlikdə nəzərdən keçirərkən qüsurları kəsdik. Təkmilləşdirməyə ehtiyacı olan ilk qaralamalarla özünüzü yükləməyin. Bunun əvəzinə kodunuza yükləyin
+Hər bir kod parçası ilk olaraq qaralama kimi başlayır, məsələn: yaş gil quruyub son formasını alıb saxsı olur. Eyni ilə proqram təminatındada yazılan kodları həmkarlarımızla birlikdə nəzərdən keçirərkən qüsurları düzəldirik. Təkmilləşdirilməyə ehtiyacı olan koda ilişib qalmayın. Bunun əvəzinə kodunuza daha yaxşı yazmağa fokuslanın.
 
 ## **Dəyişkənlər**
 
 ### Mənalı və fərqli dəyişən adlarından istifadə edin
 
-**Yaxşı:**
+**Pis:**
 
 ```javascript
 const yyyymmdstr = moment().format("YYYY/MM/DD");
 ```
 
-**Pis:**
+**Yaxşı:**
 
 ```javascript
 const currentDate = moment().format("YYYY/MM/DD");
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Use the same vocabulary for the same type of variable
+### Eyni dəyişən növü üçün eyni sözləri istifadə edin
 
-**Bad:**
+**Pis:**
 
 ```javascript
 getUserInfo();
@@ -59,45 +59,40 @@ getClientData();
 getCustomerRecord();
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 getUser();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Use searchable names
+### Axtarıla bilən adlardan istifadə edin
 
-We will read more code than we will ever write. It's important that the code we
-do write is readable and searchable. By _not_ naming variables that end up
-being meaningful for understanding our program, we hurt our readers.
-Make your names searchable. Tools like
-[buddy.js](https://github.com/danielstjules/buddy.js) and
-[ESLint](https://github.com/eslint/eslint/blob/660e0918933e6e7fede26bc675a0763a6b357c94/docs/rules/no-magic-numbers.md)
-can help identify unnamed constants.
+Biz kod yazmağdan daha çox kod oxuyacağıq, ona görədə kodun oxuna bilən və axtarıla bilən olması vacibdir. Dəyişənləri mənalı və başa düşülən ***adlandırmamaqla*** biz oxucuya zərər vermiş oluruq. Adlarınızı axtara bilən edin. buddy.js və ESLint kimi alətlər adsız sabitləri müəyyən etməyə kömək edəcək.
 
-**Bad:**
+
+**Pis:**
 
 ```javascript
-// What the heck is 86400000 for?
+//  86400000 nə idi?
 setTimeout(blastOff, 86400000);
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
-// Declare them as capitalized named constants.
+// Bu tip dəyişənləri böyük hərflə yazılmış sabitlər(consts) kimi təyin edin.
 const MILLISECONDS_PER_DAY = 60 * 60 * 24 * 1000; //86400000;
 
 setTimeout(blastOff, MILLISECONDS_PER_DAY);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Use explanatory variables
+### İzah oluna bilən dəyişənlərdən istifadə edin.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const address = "One Infinite Loop, Cupertino 95014";
@@ -108,7 +103,7 @@ saveCityZipCode(
 );
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const address = "One Infinite Loop, Cupertino 95014";
@@ -117,13 +112,13 @@ const [_, city, zipCode] = address.match(cityZipCodeRegex) || [];
 saveCityZipCode(city, zipCode);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid Mental Mapping
+### Başdan getdi planlamağdan çəkinin.
 
-Explicit is better than implicit.
+Açığ olmaq, gizli olmaqdan qat qat yaxşıdır.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const locations = ["Austin", "New York", "San Francisco"];
@@ -133,12 +128,12 @@ locations.forEach(l => {
   // ...
   // ...
   // ...
-  // Wait, what is `l` for again?
+  // Bir dəqiqə, `l` nə idi ki?
   dispatch(l);
 });
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const locations = ["Austin", "New York", "San Francisco"];
@@ -152,14 +147,13 @@ locations.forEach(location => {
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Don't add unneeded context
+### Kodunuzda lazımsız əlavə məlumat yazmayın.
 
-If your class/object name tells you something, don't repeat that in your
-variable name.
+Sinif / obyekt adınız sizə bir şey deyirsə, onu dəyişən adınızda təkrarlamayın.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const Car = {
@@ -173,7 +167,7 @@ function paintCar(car, color) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const Car = {
@@ -187,16 +181,13 @@ function paintCar(car, color) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Use default arguments instead of short circuiting or conditionals
+### Qısaqapanma və ya şərtlər yerinə əvvəlcədən təyin edilmiş arqumentlərdən istifadə edin
 
-Default arguments are often cleaner than short circuiting. Be aware that if you
-use them, your function will only provide default values for `undefined`
-arguments. Other "falsy" values such as `''`, `""`, `false`, `null`, `0`, and
-`NaN`, will not be replaced by a default value.
+Əvvəlcədən təyin edilmiş arqumentlər ümumiyyətlə qısa dövrələrdən daha təmizdir, bunları istifadə etsəniz bir şeyə diqqət yetirin, funksiyanız sadəcə `qeyri-müəyyən` *(undefined)* dəyərlər üçün öncədən təyin edilmiş arqumentı istifadə edəcək, `'',` `"",` `false,` `null, `0` və `NaN` kimi "Yanlış" adlandırıla bilən dəyərlər əvvəlcədən təyin edilmiş dəyərlə əvəz edilmir.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function createMicrobrewery(name) {
@@ -205,7 +196,7 @@ function createMicrobrewery(name) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function createMicrobrewery(name = "Hipster Brew Co.") {
@@ -213,41 +204,28 @@ function createMicrobrewery(name = "Hipster Brew Co.") {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Functions**
+## **Funksiyalar**
 
-### Function arguments (2 or fewer ideally)
+### Funksiya arqumentləri (məsləhət olunan arqument sayısı 2 və ya daha az)
 
-Limiting the amount of function parameters is incredibly important because it
-makes testing your function easier. Having more than three leads to a
-combinatorial explosion where you have to test tons of different cases with
-each separate argument.
+Funksiya parametrlərinin sayını məhdudlaşdırmaq olduqca vacibdir, çünki bu, funksiyanızı sınamağı asanlaşdırır. Üçdən artıq arqumentin olması hər bir arqumentlə tonlarla fərqli işi sınaqdan keçirməlisənə yol açır buda nəticə böyük bir kombinasiyalı partlayışa gətirib çıxarır. 
 
-One or two arguments is the ideal case, and three should be avoided if possible.
-Anything more than that should be consolidated. Usually, if you have
-more than two arguments then your function is trying to do too much. In cases
-where it's not, most of the time a higher-level object will suffice as an
-argument.
 
-Since JavaScript allows you to make objects on the fly, without a lot of class
-boilerplate, you can use an object if you are finding yourself needing a
-lot of arguments.
+Bir və ya iki arqument ideal haldır və mümkünsə üçdən qaçınmaq lazımdır. Bundan daha çox birləşdirilməlidir. Adətən, ikidən çox arqumentdən sonra funksiyanız çoxlu əməliyyatlar etməyə çalışır. Olmadığı hallarda, çox vaxt daha yüksək səviyyəli bir obyekt arqument kimi kifayət edəcəkdir.
 
-To make it obvious what properties the function expects, you can use the ES2015/ES6
-destructuring syntax. This has a few advantages:
 
-1. When someone looks at the function signature, it's immediately clear what
-   properties are being used.
-2. It can be used to simulate named parameters.
-3. Destructuring also clones the specified primitive values of the argument
-   object passed into the function. This can help prevent side effects. Note:
-   objects and arrays that are destructured from the argument object are NOT
-   cloned.
-4. Linters can warn you about unused properties, which would be impossible
-   without destructuring.
+JavaScript sizə havada obyektlər yaratmağa imkan verdiyindən, birdən çox obyektdən istifadə etmədən, çoxsaylı sinif konstruksiyalarına ehtiyac olmadan obyektdən istifadə edə bilərsiniz.
 
-**Bad:**
+Funksiyanın hansı xassələri gözlədiyini aydınlaşdırmaq üçün ES2015 / ES6 təhlil sintaksisindən istifadə edə bilərsiniz. Bunun bir sıra üstünlükləri var:
+
+1. Funksiyanın imzasına baxdıqda, hansı xüsusiyyətlərin istifadə edildiyini dərhal bilir.
+2. Adlandırılmış parametrləri simulyasiya etmək üçün istifadə edilə bilər.
+3. Təhlil prosesi həmçinin funksiyaya ötürülən arqument obyektinin ilkin müəyyən edilmiş dəyərlərini klonlaşdırır. Bu, yan təsirlərin qarşısını almağa kömək edə bilər. Qeyd: Arqument obyektlərindən təhlil edilən obyektlər və massivlər klonlaşdırılmır.
+4. Linters istifadə edilməmiş dəyərlər üçün sizi xəbərdar edə bilər ki, bunuda təhlil etmədən təyin etmək mümkün olmayacaqdır.
+
+**Pis:**
 
 ```javascript
 function createMenu(title, body, buttonText, cancellable) {
@@ -258,7 +236,7 @@ createMenu("Foo", "Bar", "Baz", true);
 
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function createMenu({ title, body, buttonText, cancellable }) {
@@ -273,17 +251,13 @@ createMenu({
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Functions should do one thing
+### Funksiyalar bir şeyi etməlidir
 
-This is by far the most important rule in software engineering. When functions
-do more than one thing, they are harder to compose, test, and reason about.
-When you can isolate a function to just one action, it can be refactored
-easily and your code will read much cleaner. If you take nothing else away from
-this guide other than this, you'll be ahead of many developers.
+Bu anlayış proqram mühəndisliyində ən vacib anlayışdır. Funksiyalar birdən çox şeyi yerinə yetirdikdə, onları Birləşdirmək, Sınamaq və Mənalandırmağ daha çətindir. Əgər Biz bir funksiyanı yazlnız vahid bir hər iş üçün yaratsaq, onu(vahid iş üçün yaradılmış funksiyanı) asanlıqla refaktorlaşdırıla bilər və, kiçik dəyişiklikə böyük bir funksiyanın yerinə yetirdiyi işi dəyişə bilər və kodumuz daha təmiz olmuş olar. Bu məqalədən heçnə anlamasanız belə, tək bu anlayışı anlamaqla bir çox *proqramçıdan* öndə olacaqsınız.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function emailClients(clients) {
@@ -296,7 +270,7 @@ function emailClients(clients) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function emailActiveClients(clients) {
@@ -309,11 +283,11 @@ function isActiveClient(client) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Function names should say what they do
+### Funksiya adları nə etdiklərini bildirməlidir
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function addToDate(date, month) {
@@ -322,11 +296,11 @@ function addToDate(date, month) {
 
 const date = new Date();
 
-// It's hard to tell from the function name what is added
+// Funksiya adından nəyin əlavə olunduğunu söyləmək çətindir
 addToDate(date, 1);
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function addMonthToDate(month, date) {
@@ -337,15 +311,13 @@ const date = new Date();
 addMonthToDate(1, date);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Functions should only be one level of abstraction
+### Funksiyalar yalnız bir mücərrəd(abstraksiya) səviyyəsidə olmalıdır
 
-When you have more than one level of abstraction your function is usually
-doing too much. Splitting up functions leads to reusability and easier
-testing.
+Birdən çox mücərrədləndirilməsi(abstraksiyası) səviyyəniz olduqda funksiyalarınız daha çox şey yerinə yetirir. Fonksiyonların bölünməsi, yenidən istifadə edilməsi və daha asan test edilməsini imkan verir.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function parseBetterJSAlternative(code) {
@@ -372,7 +344,7 @@ function parseBetterJSAlternative(code) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function parseBetterJSAlternative(code) {
@@ -409,30 +381,18 @@ function parse(tokens) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Remove duplicate code
+### Təkrarlanan kodların istifadəsindən maksimum uzağ durmağa çalışın
 
-Do your absolute best to avoid duplicate code. Duplicate code is bad because it
-means that there's more than one place to alter something if you need to change
-some logic.
 
-Imagine if you run a restaurant and you keep track of your inventory: all your
-tomatoes, onions, garlic, spices, etc. If you have multiple lists that
-you keep this on, then all have to be updated when you serve a dish with
-tomatoes in them. If you only have one list, there's only one place to update!
+Təkrarlanan kodların qarşısını almaq üçün əlinizdən gələni edin. Təkrarlanan kodlar pisdir, çünki təkrarlanan kodlar o deməkdir ki, siz bir funksiyadakı kodu dəyişmək istədiyinizdə bunu gedib bir neçə yerdə etməyə məcbur olursunuz.
 
-Oftentimes you have duplicate code because you have two or more slightly
-different things, that share a lot in common, but their differences force you
-to have two or more separate functions that do much of the same things. Removing
-duplicate code means creating an abstraction that can handle this set of
-different things with just one function/module/class.
+Təsəvvür edin ki, bir restoran işlədirsiniz və bu, restoranın ehtiyyatında olan meyvələri izləyirsiniz: almalar, bananlar, armudlar, və s, və onların qiymətin dəyişmək istəyirsiniz, və bunu yanlız bir dəfə etməklə reallaşdırmaq istəyirsiniz!
 
-Getting the abstraction right is critical, that's why you should follow the
-SOLID principles laid out in the _Classes_ section. Bad abstractions can be
-worse than duplicate code, so be careful! Having said this, if you can make
-a good abstraction, do it! Don't repeat yourself, otherwise you'll find yourself
-updating multiple places anytime you want to change one thing.
+Siz tez-tez təkrarlanan kodunuz olur, çünki onlar ümumi şeylərin çoxunu paylaşsalar da, çox az fərq var, lakin onların fərqləri sizi eyni şeylərin əksəriyyətini yerinə yetirən iki və ya daha çox ayrı funksiyaya malik olmağa məcbur edir. Təkrarlanan kodun silinməsi bu müxtəlif şeyləri tək bir funksiya/modul/sinif ilə idarə edə biləcək bir mücərrədləndirmə(abstraksiyalandirmaq) yaratmaq deməkdir.
+
+Abstraksiyanı düzgün əldə etmək çox vacibdir, ona görə də siz Siniflər bölməsində qeyd olunan *SOLID* prinsiplərinə əməl etməlisiniz. Pis abstraksiyalar  koddan daha pis ola bilər, ona görə də diqqətli olun! Bunu demişkən, yaxşı bir abstraksiya edə bilirsənsə, bunu et! Özünüzü təkrarlamayın, əks halda nəyisə dəyişmək istədiyiniz zaman birdən çox yeri yeniləyəcəksiniz.
 
 **Bad:**
 
