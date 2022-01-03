@@ -1,59 +1,47 @@
 # clean-code-javascript
 
-## Table of Contents
+## Mündəricat
 
-1. [Introduction](#introduction)
-2. [Variables](#variables)
-3. [Functions](#functions)
-4. [Objects and Data Structures](#objects-and-data-structures)
-5. [Classes](#classes)
+1. [Giriş](#Giriş)
+2. [Dəyişkənlər](#Dəyişkənlər)
+3. [Funksiylar](#Funksiyalar)
+4. [Obyektlər və Məlumat Strukturları](#obyeklər-və-məlumat-strukturları)
+5. [Siniflər (Classes)](#siniflər)
 6. [SOLID](#solid)
-7. [Testing](#testing)
-8. [Concurrency](#concurrency)
-9. [Error Handling](#error-handling)
-10. [Formatting](#formatting)
-11. [Comments](#comments)
-12. [Translation](#translation)
+7. [Testlər](#testlər)
+8. [Paralellik](#paralellik)
+9. [Xətanın idarə edilməsi](#xətanın-idarə-edilməsi)
+10. [Formatlama](#formatlama)
+11. [Şərhlər](#comments)
+12. [Tərcümə](#tərcümə)
 
-## Introduction
+## Giriş
 
-![Humorous image of software quality estimation as a count of how many expletives
-you shout when reading code](https://www.osnews.com/images/comics/wtfm.jpg)
+![Proqram keyfiyyətinin qiymətləndirilməsinin yumoristik təsviri.](https://www.osnews.com/images/comics/wtfm.jpg)
 
-Software engineering principles, from Robert C. Martin's book
-[_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882),
-adapted for JavaScript. This is not a style guide. It's a guide to producing
-[readable, reusable, and refactorable](https://github.com/ryanmcdermott/3rs-of-software-architecture) software in JavaScript.
+Bu yazı Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək] kimi prinsipləri öyrədib və, bu tiplərdə proqram təminatı yaratmaq üçün bir bələdçidir. (https://github.com/ryanmcdermott/3rs-of-software-architecture).
 
-Not every principle herein has to be strictly followed, and even fewer will be
-universally agreed upon. These are guidelines and nothing more, but they are
-ones codified over many years of collective experience by the authors of
-_Clean Code_.
+Sizdən buradakı hər bir prinsipə ciddi şəkildə əməl etmək tələb olunmur, burada olan məsləhətlər yanlnız kodunuz daha oxunaqlı və səliqəli etmək üçün _Clean Code_ müəlliflərı tərəfindən uzun illik təcrübələrə əsaslanan faydalı məsləhətlərdir.
 
-Our craft of software engineering is just a bit over 50 years old, and we are
-still learning a lot. When software architecture is as old as architecture
-itself, maybe then we will have harder rules to follow. For now, let these
-guidelines serve as a touchstone by which to assess the quality of the
-JavaScript code that you and your team produce.
+Proqram mühəndisliyi peşəmiz 50 yaşının bir az üstündədir və biz hələdə çox şey öyrənirik. Proqram təminatının arxitekturası arxitekturanın özü qədər köhnə olanda, bəlkədə əməl etməli olduğumuz daha çətin qaydalarımız olacaq. İndi isə icazə verin, bu tövsiyələr sizin və komandanızın hazırladığı JavaScript kodunun keyfiyyətini qiymətləndirmək üçün bir məhək daşı kimi sizə kömək etsin.
 
-One more thing: knowing these won't immediately make you a better software
-developer, and working with them for many years doesn't mean you won't make
-mistakes. Every piece of code starts as a first draft, like wet clay getting
-shaped into its final form. Finally, we chisel away the imperfections when
-we review it with our peers. Don't beat yourself up for first drafts that need
-improvement. Beat up the code instead!
 
-## **Variables**
 
-### Use meaningful and pronounceable variable names
+QEYD: Bu məsləhətləri bilmək sizi dərhal daha yaxşı proqram mühəndisi etmir, və bu məsləhətləri tətbiq etdiyinizdə səhviniz olmayacaq mənasına gəlmir.
 
-**Bad:**
+Hər bir kod parçası ilk olaraq qaralama kimi başlayır, məsələn: yaş gil quruyub son formasını alıb saxsı olur. Eyni ilə proqram təminatındada həmyaşıdlarımızla birlikdə nəzərdən keçirərkən qüsurları kəsdik. Təkmilləşdirməyə ehtiyacı olan ilk qaralamalarla özünüzü yükləməyin. Bunun əvəzinə kodunuza yükləyin
+
+## **Dəyişkənlər**
+
+### Mənalı və fərqli dəyişən adlarından istifadə edin
+
+**Yaxşı:**
 
 ```javascript
 const yyyymmdstr = moment().format("YYYY/MM/DD");
 ```
 
-**Good:**
+**Pis:**
 
 ```javascript
 const currentDate = moment().format("YYYY/MM/DD");
