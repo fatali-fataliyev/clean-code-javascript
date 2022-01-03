@@ -392,9 +392,9 @@ Təsəvvür edin ki, bir restoran işlədirsiniz və bu, restoranın ehtiyyatın
 
 Siz tez-tez təkrarlanan kodunuz olur, çünki onlar ümumi şeylərin çoxunu paylaşsalar da, çox az fərq var, lakin onların fərqləri sizi eyni şeylərin əksəriyyətini yerinə yetirən iki və ya daha çox ayrı funksiyaya malik olmağa məcbur edir. Təkrarlanan kodun silinməsi bu müxtəlif şeyləri tək bir funksiya/modul/sinif ilə idarə edə biləcək bir mücərrədləndirmə(abstraksiyalandirmaq) yaratmaq deməkdir.
 
-Abstraksiyanı düzgün əldə etmək çox vacibdir, ona görə də siz Siniflər bölməsində qeyd olunan *SOLID* prinsiplərinə əməl etməlisiniz. Pis abstraksiyalar  koddan daha pis ola bilər, ona görə də diqqətli olun! Bunu demişkən, yaxşı bir abstraksiya edə bilirsənsə, bunu et! Özünüzü təkrarlamayın, əks halda nəyisə dəyişmək istədiyiniz zaman birdən çox yeri yeniləyəcəksiniz.
+Mücərrədləndirməni(abstraksiyanı) düzgün əldə etmək çox vacibdir, ona görə də siz Siniflər bölməsində qeyd olunan *SOLID* prinsiplərinə əməl etməlisiniz. Pis mücərrədlər(abstraksiyalar) təkrarlanan koddan daha **pis** ola bilər, ona görə də **diqqətli olun!** Bunu demişkən, yaxşı bir abstraksiya etməyi bacarırsınızsa, abstraksıyanızı edin! Kodunuzu təklarlamayın, əks halda özünüzü minlərlə kodun içində sətir bə sətir əl ilə kodlarınızı düzəldənədə tapa bilərsiniz.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function showDeveloperList(developers) {
@@ -428,7 +428,7 @@ function showManagerList(managers) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function showEmployeeList(employees) {
@@ -455,11 +455,11 @@ function showEmployeeList(employees) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Set default objects with Object.assign
+### Object.assign ilə varsayılan obyektləri qurmaq
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const menuConfig = {
@@ -480,7 +480,7 @@ function createMenu(config) {
 createMenu(menuConfig);
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const menuConfig = {
@@ -501,20 +501,20 @@ function createMenu(config) {
     config
   );
   return finalConfig
-  // config now equals: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
+  // konfiqurasiya indi bərabərdi: {title: "Order", body: "Bar", buttonText: "Send", cancellable: true}
   // ...
 }
 
 createMenu(menuConfig);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Don't use flags as function parameters
+### Funksiya parametrlərində işarələmədən istifadə
 
-Flags tell your user that this function does more than one thing. Functions should do one thing. Split out your functions if they are following different code paths based on a boolean.
+İşarələr göstərir ki, funksiyanız birdən çox iş gördüyü başa düşülsün. Funksiyalar yalnız bir şeyi etməlidir. Əgər aşağıdakı kimi dəyişiklikləri və məntiqi operatorları olan funksiyalarınız varsa, funksiyalarınızı ayırın.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function createFile(name, temp) {
@@ -526,7 +526,7 @@ function createFile(name, temp) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function createFile(name) {
@@ -538,30 +538,22 @@ function createTempFile(name) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid Side Effects (part 1)
+### Yan təsirlərdən qaçının (1-ci hissə)
 
-A function produces a side effect if it does anything other than take a value in
-and return another value or values. A side effect could be writing to a file,
-modifying some global variable, or accidentally wiring all your money to a
-stranger.
+Funksiya bir dəyər götürüb başqa bir dəyər və ya dəyər qaytarmaqdan başqa heç nə etmirsə, bu yan təsirdir. Yan təsir fayla yazmaq olar bilər, məsələn bəzi qlobal dəyişəni dəyişdirmək və ya təsadüfən bütün pulunuzu bir başqasına göndərmək ola bilər.
 
-Now, you do need to have side effects in a program on occasion. Like the previous
-example, you might need to write to a file. What you want to do is to
-centralize where you are doing this. Don't have several functions and classes
-that write to a particular file. Have one service that does it. One and only one.
+bəzən bir proqramda yan təsirlərə ehtiyacınız vardır. Əvvəlki kimi məsələn: fayla yazmağınıza lazım ola bilər. Əgər etmək istədiyiniz iş vahid bir işdirsə onu konkretləşdirib mərkəzləşdirin. Bir neçə funksiyaya və ya sinifə malik olmayan müəyyən bir fayla yazan. Bunu edən bir xidmətə sahib olun. **Yanlnız Bir və tək xidmətə sahib olsun!**.
 
-The main point is to avoid common pitfalls like sharing state between objects
-without any structure, using mutable data types that can be written to by anything,
-and not centralizing where your side effects occur. If you can do this, you will
-be happier than the vast majority of other programmers.
 
-**Bad:**
+Burada əsas məqam heç bir strukturu olmayan obyektlər arasında vəziyyəti(*state*) paylaşmaq, hər hansı bir şeylə yazıla bilən dəyişkən məlumat növlərindən istifadə etmək və yan təsirlərinizin baş verdiyi yerləri mərkəzləşdirməmək kimi ümumi tələlərdən qaçmaqdır. Əgər bunu bacarsanız, digər proqramçıların böyük əksəriyyətindən daha xoşbəxt olacaqsınız.
+
+**Pis:**
 
 ```javascript
-// Global variable referenced by following function.
-// If we had another function that used this name, now it'd be an array and it could break it.
+// Aşağıdakı funksiya Qlobal dəyişənə istinad edir
+// Bu adda başqa bir funksiyamız olsaydı, indi massiv olub bu funksiyani pozardı.
 let name = "Ryan McDermott";
 
 function splitIntoFirstAndLastName() {
@@ -573,7 +565,7 @@ splitIntoFirstAndLastName();
 console.log(name); // ['Ryan', 'McDermott'];
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function splitIntoFirstAndLastName(name) {
@@ -587,47 +579,46 @@ console.log(name); // 'Ryan McDermott';
 console.log(newName); // ['Ryan', 'McDermott'];
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid Side Effects (part 2)
+### Yan təsirlərdən qaçının (2-ci hissə)
 
-In JavaScript, some values are unchangeable (immutable) and some are changeable 
-(mutable). Objects and arrays are two kinds of mutable values so it's important 
-to handle them carefully when they're passed as parameters to a function. A 
-JavaScript function can change an object's properties or alter the contents of 
-an array which could easily cause bugs elsewhere.
+JavaScript-də bəzi dəyərlər dəyişməz (dəyişməz), bəziləri isə dəyişkəndir
+(dəyişkən). Obyektlər və massivlər iki növ dəyişkən dəyərdir, ona görə də vacibdir ki,
+funksiyaya parametr kimi ötürüldükdə onları diqqətlə idarə olunmalıdır. A
+JavaScript funksiyası obyektin xassələrini və ya məzmununu dəyişə bilər və
+asanlıqla başqa yerdə səhvlərə səbəb ola bilər.
 
-Suppose there's a function that accepts an array parameter representing a 
-shopping cart. If the function makes a change in that shopping cart array - 
-by adding an item to purchase, for example - then any other function that 
-uses that same `cart` array will be affected by this addition. That may be 
-great, however it could also be bad. Let's imagine a bad situation:
+Tutaq ki, A-nı təmsil edən massiv parametrini qəbul edən bir funksiya var adı isə
+Alış-veriş kartıdır. Funksiya həmin alış-veriş səbəti massivində dəyişiklik edərsə -
+satın almaq üçün bir maddə əlavə etməklə, məsələn - sonra hər hansı digər funksiya
+eyni 'səbət' adlı massivindən istifadə edən bu əlavədən təsirlənəcək. Bu əla ola bilər
+, lakin pis də ola bilər. Gəlin pis bir vəziyyəti təsəvvür edək:
 
-The user clicks the "Purchase" button which calls a `purchase` function that
-spawns a network request and sends the `cart` array to the server. Because
-of a bad network connection, the `purchase` function has to keep retrying the
-request. Now, what if in the meantime the user accidentally clicks an "Add to Cart"
-button on an item they don't actually want before the network request begins?
-If that happens and the network request begins, then that purchase function
-will send the accidentally added item because the `cart` array was modified.
+İstifadəçi “al” funksiyasını çağıran “Satınalma” düyməsini klikləyir
+şəbəkə sorğusu yaradır və `səbət` massivini serverə göndərir. Çünki
+pis şəbəkə bağlantısı olduqda, 'satın alma' funksiyası yenidən cəhd etməyə davam etməlidir.
+İndi istifadəçi təsadüfən "Səbətə əlavə et" düyməsini klikləsə nə etməli?
+Şəbəkə sorğusu başlamazdan əvvəl əslində istəmədikləri əşyaları alsın?
+Əgər bu baş verərsə və şəbəkə sorğusu başlasa, o zaman satın alma funksiyası
+`səbət` massivi dəyişdirildiyi üçün təsadüfən əlavə edilmiş əşiyanı göndərəcək.
 
-A great solution would be for the `addItemToCart` function to always clone the 
-`cart`, edit it, and return the clone. This would ensure that functions that are still
-using the old shopping cart wouldn't be affected by the changes.
+`addItemToCart` funksiyasının həmişə klonlanması üçün əla həll olardı
+`səbət' funksiyası. redaktə edin və klonu qaytarın. Bu hələ ki, funksiyaları təmin edəcək
+köhnə alış-veriş səbətindən istifadə dəyişikliklərdən təsirlənməyəcək.
 
-Two caveats to mention to this approach:
+Bu yanaşma üçün iki xəbərdarlıq:
 
-1. There might be cases where you actually want to modify the input object,
-   but when you adopt this programming practice you will find that those cases
-   are pretty rare. Most things can be refactored to have no side effects!
+1. Daxil edilmiş obyekti həqiqətən dəyişmək istədiyiniz hallar ola bilər, 
+   lakin bunu etdiyiniz zaman bu halların olduqca nadir olduğunu görəcəksiniz.
+   Çox şey heç bir yan təsir olmadan yenidən təşkil oluna bilər.
 
-2. Cloning big objects can be very expensive in terms of performance. Luckily,
-   this isn't a big issue in practice because there are
-   [great libraries](https://facebook.github.io/immutable-js/) that allow
-   this kind of programming approach to be fast and not as memory intensive as
-   it would be for you to manually clone objects and arrays.
+2. Böyük obyektlərin klonlanması performans baxımından heçdə uyğun olmaya ola bilər,
+   amma xoşbəxtlikdən, praktikada bu o qədər də böyük məsələ deyil, çünki orada bu tip       
+   proqramlaşdırma yanaşmasını əl ilə etməkdən daha sürətli edən və böyük obyektlərin və massivlərin klonlanması zamanı daha az yaddaş istifadə [möhtəşəm kitabxanalar(libraries)](https://facebook.github.io/immutable-js/) var.
+ 
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const addItemToCart = (cart, item) => {
@@ -635,7 +626,7 @@ const addItemToCart = (cart, item) => {
 };
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const addItemToCart = (cart, item) => {
@@ -643,21 +634,17 @@ const addItemToCart = (cart, item) => {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Don't write to global functions
+### Qlobal funksiyalara yazmayın
 
-Polluting globals is a bad practice in JavaScript because you could clash with another
-library and the user of your API would be none-the-wiser until they get an
-exception in production. Let's think about an example: what if you wanted to
-extend JavaScript's native Array method to have a `diff` method that could
-show the difference between two arrays? You could write your new function
-to the `Array.prototype`, but it could clash with another library that tried
-to do the same thing. What if that other library was just using `diff` to find
-the difference between the first and last elements of an array? This is why it
-would be much better to just use ES2015/ES6 classes and simply extend the `Array` global.
+Qlobalları çirkləndirmək JavaScript-də pisdir, çünki siz başqa kitabxana ilə toqquşa və sizin API-lərdən istifadə edənlər problem düzələnə qədər, çətinlik çəkə və bunun nədən qaynağlandığını tapamağda çətinlik çəkərlər.
 
-**Bad:**
+Problemi nəzərdən keçirək: tutaq ki, siz JavaScript-in doğma kitabxanasında massiv `diff` metodunu genişləndirmək və iki massivin fərqlərini göstərmək istəyirsiniz. JavaScript-in yerli Array metodunu iki massiv arasındakı fərqi göstərə bilən "diff" metoduna genişləndirmək istəyirsiniz?
+
+Siz yeni funksiyanızı `Array.prototype`-də yaza bilərsiniz, lakin o, eyni şeyi etməyə çalışan başqa bir kitabxana ilədə toqquşa bilər. Əgər digər kitabxana massivin birinci və sonuncu elementləri arasındakı fərqi tapmaq üçün sadəcə olaraq `diff`-dən istifadə edərsə onda necə? Beləliklə, sadəcə ES2015 / ES6 siniflərindən istifadə etmək və `Array` qlobal olaraq genişləndirmək daha yaxşı olardı.
+
+**Pis:**
 
 ```javascript
 Array.prototype.diff = function diff(comparisonArray) {
@@ -666,7 +653,7 @@ Array.prototype.diff = function diff(comparisonArray) {
 };
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class SuperArray extends Array {
@@ -677,9 +664,9 @@ class SuperArray extends Array {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Favor functional programming over imperative programming
+### İmperativ proqramlaşdırmadan daha çox funksional proqramlaşdırmaya üstünlük verin
 
 JavaScript isn't a functional language in the way that Haskell is, but it has
 a functional flavor to it. Functional languages can be cleaner and easier to test.
