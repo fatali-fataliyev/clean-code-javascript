@@ -16,10 +16,10 @@
 12. [Tərcümə](#tərcümə)
 
 ## Giriş
-
+	
 ![Proqram keyfiyyətinin qiymətləndirilməsinin yumoristik təsviri.](https://www.osnews.com/images/comics/wtfm.jpg)
 
-Bu məqalə Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək] kimi prinsipləri öyrədib və, bu tiplərdə proqram təminatı yaratmaq üçün bir bələdçidir. (https://github.com/ryanmcdermott/3rs-of-software-architecture).
+Bu məqalə Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək](https://github.com/ryanmcdermott/3rs-of-software-architecture) kimi prinsipləri öyrədib və, bu tiplərdə proqram təminatı yaratmaq üçün bir bələdçidir.
 
 Sizdən buradakı hər bir prinsipə ciddi şəkildə əməl etmək tələb olunmur, burada olan məsləhətlər yanlnız kodunuz daha oxunaqlı və səliqəli etmək üçün _Clean Code_ müəlliflərı tərəfindən uzun illik təcrübələrə əsaslanan faydalı məsləhətlərdir.
 
@@ -614,8 +614,8 @@ Bu yanaşma üçün iki xəbərdarlıq:
    Çox şey heç bir yan təsir olmadan yenidən təşkil oluna bilər.
 
 2. Böyük obyektlərin klonlanması performans baxımından heçdə uyğun olmaya ola bilər,
-   amma xoşbəxtlikdən, praktikada bu o qədər də böyük məsələ deyil, çünki orada bu tip       
-   proqramlaşdırma yanaşmasını əl ilə etməkdən daha sürətli edən və böyük obyektlərin və massivlərin klonlanması zamanı daha az yaddaş istifadə [möhtəşəm kitabxanalar(libraries)](https://facebook.github.io/immutable-js/) var.
+   amma xoşbəxtlikdən, praktikada bu o qədər də böyük bir məsələ deyil, çünki orada bu tip       
+   proqramlaşdırma yanaşmasını əl ilə etməkdən daha sürətli edən və böyük obyektlərin və massivlərin klonlanması zamanı daha az yaddaş istifadə edən [möhtəşəm kitabxanalar](https://facebook.github.io/immutable-js/) var.
  
 
 **Pis:**
@@ -668,11 +668,9 @@ class SuperArray extends Array {
 
 ### İmperativ proqramlaşdırmadan daha çox funksional proqramlaşdırmaya üstünlük verin
 
-JavaScript isn't a functional language in the way that Haskell is, but it has
-a functional flavor to it. Functional languages can be cleaner and easier to test.
-Favor this style of programming when you can.
+JavaScript, Haskell kimi funksional bir dil deyil, lakin funksional bir ləzzətə malikdir. Funksional dillər daha təmiz və sınaqdan keçirilməsi daha asan ola bilər. Bacardığınız qədər bu tip proqramlaşdırma ilə məşğul olun.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const programmerOutput = [
@@ -701,7 +699,7 @@ for (let i = 0; i < programmerOutput.length; i++) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const programmerOutput = [
@@ -729,11 +727,11 @@ const totalOutput = programmerOutput.reduce(
 );
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Encapsulate conditionals
+### Şərtlərin əhatə olunması
 
-**Bad:**
+**Pis:**
 
 ```javascript
 if (fsm.state === "fetching" && isEmpty(listNode)) {
@@ -741,7 +739,7 @@ if (fsm.state === "fetching" && isEmpty(listNode)) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function shouldShowSpinner(fsm, listNode) {
@@ -753,11 +751,11 @@ if (shouldShowSpinner(fsmInstance, listNodeInstance)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid negative conditionals
+### Mənfi şərtlərdən çəkinin
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function isDOMNodeNotPresent(node) {
@@ -769,7 +767,7 @@ if (!isDOMNodeNotPresent(node)) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function isDOMNodePresent(node) {
@@ -781,20 +779,13 @@ if (isDOMNodePresent(node)) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid conditionals
+### Şərtlərdən(if,else,else if) çəkinin
 
-This seems like an impossible task. Upon first hearing this, most people say,
-"how am I supposed to do anything without an `if` statement?" The answer is that
-you can use polymorphism to achieve the same task in many cases. The second
-question is usually, "well that's great but why would I want to do that?" The
-answer is a previous clean code concept we learned: a function should only do
-one thing. When you have classes and functions that have `if` statements, you
-are telling your user that your function does more than one thing. Remember,
-just do one thing.
+Bu, qeyri-mümkün bir iş kimi görünə bilər, Hətta bunu ilk dəfə eşitdikdən sonra bir çox insan "`if` ifadəsi olmadan necə kod yazım ?" Cavab budur ki, bir çox hallarda eyni tapşırığı yerinə yetirmək üçün polimorfizmdən istifadə edə bilərsiniz. İkinci sual, adətən, "yaxşı, bu əladır, amma niyə bunu etmək istərdim?" Cavab əvvəllər öyrəndiyimiz təmiz kod anlayışı idi: funksiya yalnız bir işi görməlidir. Əgər if ifadələri ilə siniflər funksiyada olduqda, bu, istifadəçilərə funksiyanızın birdən çox iş gördüyünü bildirir. Təmiz kod yazmağın əsas anlayışlarından biri olan mücərrədləndirmə(abstraksiya), funksiyada yalnız bir şey et.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 class Airplane {
@@ -812,7 +803,7 @@ class Airplane {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class Airplane {
@@ -841,16 +832,16 @@ class Cessna extends Airplane {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid type-checking (part 1)
+### Növ yoxlamasından çəkinin (1-ci hissə)
 
-JavaScript is untyped, which means your functions can take any type of argument.
-Sometimes you are bitten by this freedom and it becomes tempting to do
-type-checking in your functions. There are many ways to avoid having to do this.
-The first thing to consider is consistent APIs.
+JavaScript tipsizdir, yəni funksiyalarınız istənilən növ arqument qəbul edə bilər.
+Bəzən bu bizə problem yaradıb tələyə apara bilər,
+Beləki, funksiyalarınızda yoxlama yazmaq cəld edici olur. Bunu etmək məcburiyyətində qalmamağın bir çox yolu var.
+Nəzərə alınacaq ilk şey ardıcıl API-lərdir.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function travelToTexas(vehicle) {
@@ -862,7 +853,7 @@ function travelToTexas(vehicle) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function travelToTexas(vehicle) {
@@ -870,9 +861,9 @@ function travelToTexas(vehicle) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid type-checking (part 2)
+### Növ yoxlamasından çəkinin (2-ci hissə)
 
 If you are working with basic primitive values like strings and integers,
 and you can't use polymorphism but you still feel the need to type-check,
