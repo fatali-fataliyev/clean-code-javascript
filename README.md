@@ -19,7 +19,7 @@
 	
 ![Proqram keyfiyyətinin qiymətləndirilməsinin yumoristik təsviri.](https://www.osnews.com/images/comics/wtfm.jpg)
 
-Bu məqalə Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək](https://github.com/ryanmcdermott/3rs-of-software-architecture) kimi prinsipləri öyrədib və, bu tiplərdə proqram təminatı yaratmaq üçün bir bələdçidir.
+Bu məqalə Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək](https://github.com/ryanmcdermott/3rs-of-software-architecture) kimi prinsipləri öyrədib və bu tiplərdə proqram təminatı yaratmaq üçün olan bir bələdçidir.
 
 Sizdən buradakı hər bir prinsipə ciddi şəkildə əməl etmək tələb olunmur, burada olan məsləhətlər yanlnız kodunuz daha oxunaqlı və səliqəli etmək üçün _Clean Code_ müəlliflərı tərəfindən uzun illik təcrübələrə əsaslanan faydalı məsləhətlərdir.
 
