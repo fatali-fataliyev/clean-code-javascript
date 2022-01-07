@@ -838,7 +838,7 @@ class Cessna extends Airplane {
 
 JavaScript tipsizdir, yəni funksiyalarınız istənilən növ arqument qəbul edə bilər.
 Bəzən bu bizə problem yaradıb tələyə apara bilər,
-Beləki, funksiyalarınızda yoxlama yazmaq cəld edici olur. Bunu etmək məcburiyyətində qalmamağın bir çox yolu var.
+Beləki, funksiyalarınızda yoxlama yazmaq bir çox zaman cəld edici olur. Bunu etmək məcburiyyətində qalmamağın bir çox yolu var.
 Nəzərə alınacaq ilk şey ardıcıl API-lərdir.
 
 **Pis:**
@@ -865,17 +865,15 @@ function travelToTexas(vehicle) {
 
 ### Növ yoxlamasından çəkinin (2-ci hissə)
 
-If you are working with basic primitive values like strings and integers,
-and you can't use polymorphism but you still feel the need to type-check,
-you should consider using TypeScript. It is an excellent alternative to normal
-JavaScript, as it provides you with static typing on top of standard JavaScript
-syntax. The problem with manually type-checking normal JavaScript is that
-doing it well requires so much extra verbiage that the faux "type-safety" you get
-doesn't make up for the lost readability. Keep your JavaScript clean, write
-good tests, and have good code reviews. Otherwise, do all of that but with
-TypeScript (which, like I said, is a great alternative!).
+Əgər sətirlər və tam ədədlər kimi əsas primitiv dəyərlərlə işləyirsinizsə,
+və polimorfizmdən istifadə edə bilmirsinizsə, lakin hələ də kodun yoxlanılması ehtiyacını hiss edirsiniz,
+TypeScript istifadə etməyi düşünməlisiniz. TypeScript əla alternativdir
+JavaScript-də, çünki standart dinamik JavaScript-in üstünə statik yazmağı təmin edir
+TypeScript. Normal JavaScript-i əl ilə(manual) debuq etmək qəliz məsələdir. 
+JavaScript-inizi təmiz saxlayın,
+yaxşı testlər və yaxşı kod rəyləri yazın,TypeScript (bu, dediyim kimi javascript-də, əla alternativdir təmiz kod yazmağ üçün!).
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function combine(val1, val2) {
@@ -890,7 +888,7 @@ function combine(val1, val2) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function combine(val1, val2) {
@@ -898,27 +896,25 @@ function combine(val1, val2) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Don't over-optimize
+### Kodu həddindən artıq optimallaşdırmayın
 
-Modern browsers do a lot of optimization under-the-hood at runtime. A lot of
-times, if you are optimizing then you are just wasting your time. [There are good
-resources](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers)
-for seeing where optimization is lacking. Target those in the meantime, until
-they are fixed if they can be.
+Müasir brauzerlər özündə yetəri qədər kodu optimallaşdıran sxemlər ehtiva edir, yəni sizin kodunuzu həddindən artıq optimallaşdırma istəyiniz sadəcə vaxt itkisinə səbəb olacaq.
 
-**Bad:**
+Optimallaşdırmanın harada lazım olduğunu [göstərən](https://github.com/petkaantonov/bluebird/wiki/Optimization-killers yaxşı resurslar var. Siz bunları optimallaşdırana qədər qeyd edə bilərsiniz.
+
+**Pis:**
 
 ```javascript
-// On old browsers, each iteration with uncached `list.length` would be costly
-// because of `list.length` recomputation. In modern browsers, this is optimized.
+// Köhnə brauzerlərdə keşsiz `list.length` ilə hər yüklənmədə daha çox enerji sərf olunacaq.
+// `list.length` yenidən hesablanması səbəbindən. Müasir brauzerlərdə bu optimallaşdırılıb.
 for (let i = 0, len = list.length; i < len; i++) {
   // ...
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 for (let i = 0; i < list.length; i++) {
@@ -926,15 +922,14 @@ for (let i = 0; i < list.length; i++) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Remove dead code
+### İstifadə edilməyən kodları silin.
 
-Dead code is just as bad as duplicate code. There's no reason to keep it in
-your codebase. If it's not being called, get rid of it! It will still be safe
-in your version history if you still need it.
+İstifadə edilməyən kod təkrarlanan kod qədər pisdir, Əgər o kod hər hansısa yerdə çağırılmırsa və istifadə edilmirsə, o kodu silin.
+hələ də ehtiyacınız varsa, versiya tarixçənizə atın
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function oldRequestModule(url) {
@@ -949,7 +944,7 @@ const req = newRequestModule;
 inventoryTracker("apples", req, "www.inventory-awesome.io");
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function newRequestModule(url) {
@@ -960,21 +955,18 @@ const req = newRequestModule;
 inventoryTracker("apples", req, "www.inventory-awesome.io");
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Objects and Data Structures**
+## **Obyektlər və Məlumat Strukturları**
 
-### Use getters and setters
+### Alıcı və təyinedicilərdən istifadə (Getters, Setters)
 
-Using getters and setters to access data on objects could be better than simply
-looking for a property on an object. "Why?" you might ask. Well, here's an
-unorganized list of reasons why:
+Obyektlərdəki məlumatlara daxil olmaq üçün alıcılardan və təyinedicilərdən istifadə obyektdə xassə axtarmaqdan daha yaxşı ola bilər. "Niyə?" deyə soruşa bilərsiniz, səbəblərin siyahısı:
 
-- When you want to do more beyond getting an object property, you don't have
-  to look up and change every accessor in your codebase.
-- Makes adding validation simple when doing a `set`.
-- Encapsulates the internal representation.
-- Easy to add logging and error handling when getting and setting.
+- Sadəcə obyekt xassəsini əldə etməkdən daha çox şey etmək istədiyiniz an kod bazanızdakı hər bir aksessuara baxmaq və dəyişmək lazım deyil.
+- `set` edərkən doğrulama əlavə etməyi asanlaşdırır.
+- Daxili təmsili əhatə edir.
+-  və quraşdırma zamanı giriş(logging) və səhvlərin idarə edilməsini(error-handling) əlavə etmək asandır.
 - You can lazy load your object's properties, let's say getting it from a
   server.
 
