@@ -21,7 +21,7 @@
 
 Bu məqalə Robert C. Martinin proqram mühəndisliyi prinsiplərini ehtiva edən [_Clean Code_](https://www.amazon.com/Clean-Code-Handbook-Software-Craftsmanship/dp/0132350882) kitabının JavaScript versiyasıdır. Bu üslub bələdçisi olmayıb, sadəcə JavaScript-də [Oxumaq, təkrar istifadə etmək və yenidən redaktə etmək](https://github.com/ryanmcdermott/3rs-of-software-architecture) kimi prinsipləri öyrədib və bu tiplərdə proqram təminatı yaratmaq üçün olan bir bələdçidir.
 
-Sizdən buradakı hər bir prinsipə ciddi şəkildə əməl etmək tələb olunmur, burada olan məsləhətlər yanlnız kodunuz daha oxunaqlı və səliqəli etmək üçün _Clean Code_ müəlliflərı tərəfindən uzun illik təcrübələrə əsaslanan faydalı məsləhətlərdir.
+Sizdən buradakı hər bir prinsipə ciddi şəkildə əməl etmək tələb olunmur, burada olan məsləhətlər yanlnız kodunuz daha oxunaqlı və səliqəli etmək üçün _Clean Code_ müəllifləri tərəfindən uzun illik təcrübələrə əsaslanan faydalı məsləhətlərdir.
 
 Proqram mühəndisliyi peşəmiz 50 yaşının bir az üstündədir və biz hələdə çox şey öyrənirik. Proqram təminatının arxitekturası arxitekturanın özü qədər köhnə olanda, bəlkədə əməl etməli olduğumuz daha çətin qaydalarımız olacaq. İndi isə icazə verin, bu tövsiyələr sizin və komandanızın hazırladığı JavaScript kodunun keyfiyyətini qiymətləndirmək üçün bir məhək daşı kimi sizə kömək etsin.
 
@@ -668,7 +668,7 @@ class SuperArray extends Array {
 
 ### İmperativ proqramlaşdırmadan daha çox funksional proqramlaşdırmaya üstünlük verin
 
-JavaScript, Haskell kimi funksional bir dil deyil, lakin funksional bir ləzzətə malikdir. Funksional dillər daha təmiz və sınaqdan keçirilməsi daha asan ola bilər. Bacardığınız qədər bu tip proqramlaşdırma ilə məşğul olun.
+JavaScript, Haskell kimi funksional bir dil deyil, lakin funksional bir tərzə malikdir. Funksional dillər daha təmiz və sınaqdan keçirilməsi daha asan ola bilər. Bacardığınız qədər bu tip proqramlaşdırma ilə məşğul olun.
 
 **Pis:**
 
@@ -963,14 +963,13 @@ inventoryTracker("apples", req, "www.inventory-awesome.io");
 
 Obyektlərdəki məlumatlara daxil olmaq üçün alıcılardan və təyinedicilərdən istifadə obyektdə xassə axtarmaqdan daha yaxşı ola bilər. "Niyə?" deyə soruşa bilərsiniz, səbəblərin siyahısı:
 
-- Sadəcə obyekt xassəsini əldə etməkdən daha çox şey etmək istədiyiniz an kod bazanızdakı hər bir aksessuara baxmaq və dəyişmək lazım deyil.
-- `set` edərkən doğrulama əlavə etməyi asanlaşdırır.
-- Daxili təmsili əhatə edir.
--  və quraşdırma zamanı giriş(logging) və səhvlərin idarə edilməsini(error-handling) əlavə etmək asandır.
-- You can lazy load your object's properties, let's say getting it from a
-  server.
+-  Bir obyektin xüsusiyyətində dəyişiklik etməkdən əlavə iş görmək istədikdə, kod bazanızdakı hər bir girişə baxmaq və dəyişmək lazım deyil.
+- `set` edərkən doğrulama etmək asan olur.
+-  Daxili təmsili əhatə edir.
+-  Quraşdırma zamanı giriş(logging) və səhvlərin idarə edilməsini(error-handling) əlavə etmək asandır.
+-  Ola bilər ki, siz məlumatları serverdən yükləyirsiniz, bu zaman siz obyektiniz xüsusiyyətlərin təmbəl yüklənmə(lazy load) ilə yükləyə bilərsiniz.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function makeBankAccount() {
@@ -990,17 +989,17 @@ account.balance = 100;
 
 ```javascript
 function makeBankAccount() {
-  // this one is private
+  // yerli dəyişkən(private)
   let balance = 0;
 
-  // a "getter", made public via the returned object below
+  // alıcını(getter) ümumi(public) obyekt edib təyin et.
   function getBalance() {
     return balance;
   }
 
-  // a "setter", made public via the returned object below
+  // təyin edicini(setter) ümumi(public) obyekt edib təyin et.
   function setBalance(amount) {
-    // ... validate before updating the balance
+    // ... balansı yeniləməzdən əvvəl doğrulayın
     balance = amount;
   }
 
@@ -1015,13 +1014,14 @@ const account = makeBankAccount();
 account.setBalance(100);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Make objects have private members
+### Obyektlərin xüsusi üzvlərə sahib olmasını təmin etmək
 
-This can be accomplished through closures (for ES5 and below).
+Bu, bağlamalar vasitəsilə həyata keçirilə bilər (ES5 və aşağıda versiya).
 
-**Bad:**
+
+**Pis:**
 
 ```javascript
 const Employee = function(name) {
@@ -1033,12 +1033,12 @@ Employee.prototype.getName = function getName() {
 };
 
 const employee = new Employee("John Doe");
-console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
+console.log(`Employee name: ${employee.getName()}`); // İşçinin adı: John Doe
 delete employee.name;
-console.log(`Employee name: ${employee.getName()}`); // Employee name: undefined
+console.log(`Employee name: ${employee.getName()}`); // İşçinin adı: undefined
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function makeEmployee(name) {
@@ -1050,23 +1050,20 @@ function makeEmployee(name) {
 }
 
 const employee = makeEmployee("John Doe");
-console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
+console.log(`Employee name: ${employee.getName()}`); // İşçinin adı: John Doe
 delete employee.name;
-console.log(`Employee name: ${employee.getName()}`); // Employee name: John Doe
+console.log(`Employee name: ${employee.getName()}`); // İşçinin adı: John Doe
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Classes**
+## **Siniflər**
 
-### Prefer ES2015/ES6 classes over ES5 plain functions
+### ES5 sadə funksiyalarındansa ES2015/ES6 siniflərinə üstünlük verin
 
-It's very difficult to get readable class inheritance, construction, and method
-definitions for classical ES5 classes. If you need inheritance (and be aware
-that you might not), then prefer ES2015/ES6 classes. However, prefer small functions over
-classes until you find yourself needing larger and more complex objects.
+Klassik ES5 sinifləri üçün oxunaqlı sinif modeli, strukturu və metod təriflərini əldə etmək çox çətindir. Əgər mirasa(inheritance) ehtiyacınız varsa (və ehtiyacınız olmayada bilər), ES2015 / ES6 siniflərinə üstünlük verin. Bununla belə, daha böyük və daha mürəkkəb obyektlərə zərurət yaranana qədər kiçik funksiyalara üstünlük verin.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const Animal = function(age) {
@@ -1106,7 +1103,7 @@ Human.prototype.constructor = Human;
 Human.prototype.speak = function speak() {};
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class Animal {
@@ -1142,17 +1139,14 @@ class Human extends Mammal {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Use method chaining
+### Zəncirləmə metodundan istifadə edin
 
-This pattern is very useful in JavaScript and you see it in many libraries such
-as jQuery and Lodash. It allows your code to be expressive, and less verbose.
-For that reason, I say, use method chaining and take a look at how clean your code
-will be. In your class functions, simply return `this` at the end of every function,
-and you can chain further class methods onto it.
+Bu(chaining) nümunə(pattern) JavaScript'də çox üğurlu və istifadəyə yaralı bir nümunədir beləki, siz bu nümunənin uğurunu *JQuery*, *Lodash* kimi kitabxanalarda(library) görə bilərsiniz. Bu nümunə kodunuzu ifadəli və daha az detallı(kompleks) edir. Bu nümunəni istifadə etsəniz özünüzdə görəcəksiniz ki, kodunuz daha səliqəlidir.
 
-**Bad:**
+
+**Pis:**
 
 ```javascript
 class Car {
@@ -1184,7 +1178,7 @@ car.setColor("pink");
 car.save();
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class Car {
@@ -1222,28 +1216,20 @@ class Car {
 const car = new Car("Ford", "F-150", "red").setColor("pink").save();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Prefer composition over inheritance
+### Mirasdan daha çox kompozisiyaya üstünlük verin
 
-As stated famously in [_Design Patterns_](https://en.wikipedia.org/wiki/Design_Patterns) by the Gang of Four,
-you should prefer composition over inheritance where you can. There are lots of
-good reasons to use inheritance and lots of good reasons to use composition.
-The main point for this maxim is that if your mind instinctively goes for
-inheritance, try to think if composition could model your problem better. In some
-cases it can.
 
-You might be wondering then, "when should I use inheritance?" It
-depends on your problem at hand, but this is a decent list of when inheritance
-makes more sense than composition:
+Dörd nəfərdən ibarət dəstə tərəfindən yaradılmış məşhur [_Dizayn Nümunələri_](https://en.wikipedia.org/wiki/Design_Patterns) kimi, siz mirasdansa kompozisiyanı seçməlisiniz. Mirasdan istifadə etmək üçün bir çox yaxşı səbəblər və kompozisiyadan istifadə etmək üçün dahada çoxlu yaxşı səbəblər var. Bu maksimum nöqtə üçün əsas məqam odur ki, əgər ağlınız instinktiv olaraq mirasdan istifadə etməyə gedirsə, onun kompozisiya probleminizi daha yaxşı modelləşdirə biləcəyini düşünməyə çalışın.
 
-1. Your inheritance represents an "is-a" relationship and not a "has-a"
-   relationship (Human->Animal vs. User->UserDetails).
-2. You can reuse code from the base classes (Humans can move like all animals).
-3. You want to make global changes to derived classes by changing a base class.
-   (Change the caloric expenditure of all animals when they move).
+"Mirasdan nə vaxt istifadə etməliyəm?" sualı sizi maraqlandıra bilər. Bu, əlinizdə olan problemdən asılıdır, lakin bu, mirasın kompozisiyadan daha mənalı olduğu hallar:
 
-**Bad:**
+1. Mirasınız "has-a" əlaqəsini deyil, "is-a" əlaqəsini təmsil edir (İnsan->Heyvan və İstifadəçi->İstifadəçi Təfərrüatları).
+2. Siz əsas siniflərdən kodu təkrar istifadə edə bilərsiniz (İnsanlar bütün heyvanlar kimi hərəkət edə bilər).
+3. Siz əsas sinifi dəyişdirərək törəmə siniflərə qlobal dəyişikliklər etmək istəyirsiniz. (Hərəkət edərkən bütün heyvanların kalori xərclərini dəyişdirin).
+
+**Pis:**
 
 ```javascript
 class Employee {
@@ -1255,7 +1241,7 @@ class Employee {
   // ...
 }
 
-// Bad because Employees "have" tax data. EmployeeTaxData is not a type of Employee
+// Pisdir, çünki işçilər(Employee) vergi məlumatlarına sahibdirlər. EmployeeTaxData(EmployeeTaxData) bir növ işçi (Employee) deyil.
 class EmployeeTaxData extends Employee {
   constructor(ssn, salary) {
     super();
@@ -1267,7 +1253,7 @@ class EmployeeTaxData extends Employee {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class EmployeeTaxData {
@@ -1292,22 +1278,16 @@ class Employee {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
 ## **SOLID**
 
-### Single Responsibility Principle (SRP)
+### Vahid Məsuliyyət Prinsipi (SRP)
 
-As stated in Clean Code, "There should never be more than one reason for a class
-to change". It's tempting to jam-pack a class with a lot of functionality, like
-when you can only take one suitcase on your flight. The issue with this is
-that your class won't be conceptually cohesive and it will give it many reasons
-to change. Minimizing the amount of times you need to change a class is important.
-It's important because if too much functionality is in one class and you modify
-a piece of it, it can be difficult to understand how that will affect other
-dependent modules in your codebase.
 
-**Bad:**
+Təmiz Kod'da deyildiyi kimi, "Sinifin dəyişməsi üçün heç vaxt birdən çox səbəb olmamalıdır". Çox funksiyalı bir sinfi sıxışdırmaq, təyyarə uçuşlarında özünüzlə götürə biləcəyiniz çamadan kimi cəlbedici ola bilər. Bununla bağlı problem var, sinifiniz konseptual olaraq uyğun gəlməyəcək və dəyişmək üçün bir çox səbəb yaranacaq. Bir sinfi dəyişmək üçün lazım olan sayını minimuma endirmək vacibdir. Sinifin çox funksiyası varsa və siz onun bir hissəsini dəyişdirirsinizsə, bunun kod bazanızdakı digər asılı modullara necə təsir edəcəyini anlamaq çətin ola bilər.
+
+**Pis:**
 
 ```javascript
 class UserSettings {
@@ -1327,7 +1307,7 @@ class UserSettings {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class UserAuth {
@@ -1354,16 +1334,13 @@ class UserSettings {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Open/Closed Principle (OCP)
+### Açıq/Qapalı Prinsipi (OCP)
 
-As stated by Bertrand Meyer, "software entities (classes, modules, functions,
-etc.) should be open for extension, but closed for modification." What does that
-mean though? This principle basically states that you should allow users to
-add new functionalities without changing existing code.
+Bertrand Meyerin qeyd etdiyi kimi, “proqram təminatının *sinifləri, modulları, funksiyaları və s.* genişləndirilmək üçün açıq, lakin modifikasiya üçün qapalı olmalıdır”. Bunun mənası nədi? Bu prinsip onu bildirir ki, siz istifadəçilərə mövcud kodu dəyişmədən yeni funksionallıq əlavə etməyə icazə verməlisiniz.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 class AjaxAdapter extends Adapter {
@@ -1388,26 +1365,26 @@ class HttpRequester {
   fetch(url) {
     if (this.adapter.name === "ajaxAdapter") {
       return makeAjaxCall(url).then(response => {
-        // transform response and return
+        // cavabı çevirmək və qaytarmaq
       });
     } else if (this.adapter.name === "nodeAdapter") {
       return makeHttpCall(url).then(response => {
-        // transform response and return
+        // cavabı çevirmək və qaytarmaq
       });
     }
   }
 }
 
 function makeAjaxCall(url) {
-  // request and return promise
+  // sorğu və qaytarma
 }
 
 function makeHttpCall(url) {
-  // request and return promise
+  // sorğu və qaytarma
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class AjaxAdapter extends Adapter {
@@ -1417,7 +1394,7 @@ class AjaxAdapter extends Adapter {
   }
 
   request(url) {
-    // request and return promise
+    // sorğu və qaytarma
   }
 }
 
@@ -1428,7 +1405,7 @@ class NodeAdapter extends Adapter {
   }
 
   request(url) {
-    // request and return promise
+    // sorğu və qaytarma
   }
 }
 
@@ -1445,24 +1422,18 @@ class HttpRequester {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Liskov Substitution Principle (LSP)
+### Liskovun Əvəzetmə Prinsipi (LSP)
 
-This is a scary term for a very simple concept. It's formally defined as "If S
-is a subtype of T, then objects of type T may be replaced with objects of type S
-(i.e., objects of type S may substitute objects of type T) without altering any
-of the desirable properties of that program (correctness, task performed,
-etc.)." That's an even scarier definition.
 
-The best explanation for this is if you have a parent class and a child class,
-then the base class and child class can be used interchangeably without getting
-incorrect results. This might still be confusing, so let's take a look at the
-classic Square-Rectangle example. Mathematically, a square is a rectangle, but
-if you model it using the "is-a" relationship via inheritance, you quickly
-get into trouble.
+Bu çox sadə bir anlayış üçün qorxulu termindir.Rəsmi olaraq "Əgər S T'nin alt növüdürsə, o an S tipli obyektlər T tipli obyektlərlə (yəni S tipli obyektlər T proqramındakı obyektləri əvəz edə bilər) dəyişdirilmədən dəyişdirilə bilər, həmin proqramın arzu olunan xüsusiyyətləri (dəqiqlik, yerinə yetirilən işlər və s.) " Bu, daha dəhşətli bir tərifdir.
 
-**Bad:**
+
+Bunun ən yaxşı izahı odur ki, əgər sizin üst sinifiniz və alt sinifiniz varsa, əsas sinif və alt sinif yanlış nəticələr əldə etmədən bir-birini əvəz edə bilər.Bu hələ də çaşqınlıq yarada bilər, ona görə də klassik Kvadrat Düzbucaqlı nümunəsinə baxaq. Riyazi olaraq kvadrat düzbucaqlıdır, lakin "is-a" münasibətindən istifadə edərək mirasla modelləşdirsəniz, tez bir zamanda problemlə üzləşəcəksiniz.
+
+
+**Pis:**
 
 ```javascript
 class Rectangle {
@@ -1508,7 +1479,7 @@ function renderLargeRectangles(rectangles) {
   rectangles.forEach(rectangle => {
     rectangle.setWidth(4);
     rectangle.setHeight(5);
-    const area = rectangle.getArea(); // BAD: Returns 25 for Square. Should be 20.
+    const area = rectangle.getArea(); // PİS: Kvadrat üçün 25 qaytarır halbuki, 20 olmalıdır.
     rectangle.render(area);
   });
 }
@@ -1517,7 +1488,7 @@ const rectangles = [new Rectangle(), new Rectangle(), new Square()];
 renderLargeRectangles(rectangles);
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class Shape {
@@ -1564,17 +1535,13 @@ const shapes = [new Rectangle(4, 5), new Rectangle(4, 5), new Square(5)];
 renderLargeShapes(shapes);
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Interface Segregation Principle (ISP)
+### İnterfeyslərin ayrılması prinsipi (ISP)
 
-JavaScript doesn't have interfaces so this principle doesn't apply as strictly
-as others. However, it's important and relevant even with JavaScript's lack of
-type system.
+JavaScript-in interfeysləri yoxdur, ona görə də bu prinsip digərləri kimi ciddi şəkildə tətbiq edilmir. Bununla belə, JavaScript-in tip sisteminin olmamasında belə vacibdir.
 
-ISP states that "Clients should not be forced to depend upon interfaces that
-they do not use." Interfaces are implicit contracts in JavaScript because of
-duck typing.
+ISP, "istifadəçilər istifadə etmədikləri interfeyslərdən asılı olmağa məcbur edilməməlidirlər." deyir. İnterfeyslər `Duck Typing` səbəbiylə JavaScript-də gizli razılaşmalardır.
 
 A good example to look at that demonstrates this principle in JavaScript is for
 classes that require large settings objects. Not requiring clients to setup
