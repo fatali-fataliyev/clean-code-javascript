@@ -1609,32 +1609,21 @@ const $ = new DOMTraverser({
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Dependency Inversion Principle (DIP)
+### Bağlılığı tərsinə çevirmə prinsipi (DIP)
 
-This principle states two essential things:
+Bu prinsip iki əsas şeyi ifadə edir:
 
-1. High-level modules should not depend on low-level modules. Both should
-   depend on abstractions.
-2. Abstractions should not depend upon details. Details should depend on
-   abstractions.
+1. Yüksək səviyyəli modullar aşağı səviyyəli modullardan asılı olmamalıdır. Hər ikisi abstraksiyalardan asılı olmalıdır.
+2. Abstraksiyalar detallardan asılı olmamalıdır, detallar abstraksiyalardan asılı olmalıdır.
 
-This can be hard to understand at first, but if you've worked with AngularJS,
-you've seen an implementation of this principle in the form of Dependency
-Injection (DI). While they are not identical concepts, DIP keeps high-level
-modules from knowing the details of its low-level modules and setting them up.
-It can accomplish this through DI. A huge benefit of this is that it reduces
-the coupling between modules. Coupling is a very bad development pattern because
-it makes your code hard to refactor.
 
-As stated previously, JavaScript doesn't have interfaces so the abstractions
-that are depended upon are implicit contracts. That is to say, the methods
-and properties that an object/class exposes to another object/class. In the
-example below, the implicit contract is that any Request module for an
-`InventoryTracker` will have a `requestItems` method.
+İlk zamanlarda bunu başa düşmək çətin ola bilər, lakin siz AngularJS ilə işləmisinizsə, bu prinsipin Dependency Injection (DI) şəklində həyata keçirildiyini görmüsünüz. Eyni anlayışlar olmasa da, DIP yüksək səviyyəli modullara aşağı səviyyəli modulların detallarını bilmək və tənzimləmək imkanı verir. DI ilədə buna nail oluna bilər. Bunun böyük bir faydası modullar arasındakı əlaqəni azaltmasıdır. Birləşmə(Coupling) çox pis birləşmə nümunəsidir, çünki kodunuzun yenidən qurulmasını çətinləşdirir.
 
-**Bad:**
+Daha əvvəl qeyd edildiyi kimi, JavaScript-in interfeysləri yoxdur, ona görə də abstraksiyalar bağlılığ təşkil etmir. Yəni bir obyektin/sinifin digər obyektə/sinifə məruz qoyduğu metodlar və xüsusiyyətlər. Aşağıdakı bağlılığ olmaması ondan ibarətdir ki, `InventoryTracker` üçün hər hansı sorğu modulunda `requestItems` metodu olacaq.
+
+**Pis:**
 
 ```javascript
 class InventoryRequester {
@@ -1651,8 +1640,8 @@ class InventoryTracker {
   constructor(items) {
     this.items = items;
 
-    // BAD: We have created a dependency on a specific request implementation.
-    // We should just have requestItems depend on a request method: `request`
+    // PİS: Biz xüsusi sorğu tətbiqindən asılılıq yaratdıq.
+    // `requestİtems` sadəcə `request`'də bağlı olmalıdır.
     this.requester = new InventoryRequester();
   }
 
@@ -1667,7 +1656,7 @@ const inventoryTracker = new InventoryTracker(["apples", "bananas"]);
 inventoryTracker.requestItems();
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class InventoryTracker {
@@ -2176,7 +2165,7 @@ doStuff();
 Remember, use version control! There's no need for dead code, commented code,
 and especially journal comments. Use `git log` to get history!
 
-**Bad:**
+**Pis:**
 
 ```javascript
 /**
@@ -2205,7 +2194,7 @@ function combine(a, b) {
 They usually just add noise. Let the functions and variable names along with the
 proper indentation and formatting give the visual structure to your code.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 ////////////////////////////////////////////////////////////////////////////////
