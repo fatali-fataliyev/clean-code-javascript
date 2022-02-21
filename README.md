@@ -1705,20 +1705,17 @@ inventoryTracker.requestItems();
 
 ## **Test etmək**
 
-(https://gotwarlost.github.io/istanbul/)
 
-Test etmək 
 
-There's no excuse to not write tests. There are [plenty of good JS test frameworks](https://jstherightway.org/#testing-tools), so find one that your team prefers.
-When you find one that works for your team, then aim to always write tests
-for every new feature/module you introduce. If your preferred method is
-Test Driven Development (TDD), that is great, but the main point is to just
-make sure you are reaching your coverage goals before launching any feature,
-or refactoring an existing one.
+Test canlı yayımdan daha vacibdir. Əgər testiniz yoxdursa və ya cüzi bir məbləğdirsə, kodu hər dəfə təqdim edəndə heç bir şeyin pozulmadığına əmin ola bilməzsiniz. 100% əhatəyə malik olmaq (bütün bəyanatlar və filiallar) sizə inam və dinclik bəxş edən kifayət qədər məbləğin nədən ibarət olduğuna qərar vermək sizin komandanızdan asılıdır. Bu o deməkdir ki, əla sınaq çərçivəsinə malik olmaqla yanaşı, [yaxşı əhatə alətindən](https://gotwarlost.github.io/istanbul/) istifadə etməlisiniz.
 
-### Single concept per test
+Testləri yazmamaq üçün heç bir bəhanə yoxdur. [Bir çox yaxşı JS framework'ləri](https://jstherightway.org/#testing-tools) var, ona görə də komandanızın üstünlük verdiyi birini tapın.
 
-**Bad:**
+Komandanız üçün nəyin işlədiyini tapdıqdan sonra istifadə olunan hər yeni funksiya və modul üçün həmişə testlər yazmağı hədəfləyin. Seçim etdiyiniz metod Test Dəstəkli İnkişafdırsa (TDD), bu əladır, lakin əsas odur ki, hər hansı bir funksiyanı işə salmazdan və ya mövcud funksiyanı yenidən nəzərdən keçirməzdən əvvəl kodda məqsədlərinizə çatdığınızdan əmin olun.
+
+### Hər test üçün bir konsepsiya
+
+**Pis:**
 
 ```javascript
 import assert from "assert";
@@ -1742,7 +1739,7 @@ describe("MomentJS", () => {
 });
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 import assert from "assert";
@@ -1768,16 +1765,16 @@ describe("MomentJS", () => {
 });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Concurrency**
 
-### Use Promises, not callbacks
+## **Paralellik**
 
-Callbacks aren't clean, and they cause excessive amounts of nesting. With ES2015/ES6,
-Promises are a built-in global type. Use them!
+### Promises'lərdən istifadə edin, callbacks-dən yox
 
-**Bad:**
+Callback'lər təmiz deyillər və kodda həddindən artıq düyünə səbəb olurlar. ES/15 və ES/16 ilə birlikdə 'Promises'dan istifadəyə üstünlük verin.
+
+**Pis:**
 
 ```javascript
 import { get } from "request";
@@ -1801,7 +1798,7 @@ get(
 );
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 import { get } from "request-promise";
@@ -1819,17 +1816,14 @@ get("https://en.wikipedia.org/wiki/Robert_Cecil_Martin")
   });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Async/Await are even cleaner than Promises
+### Async/Await istifadə etmək Promises istifadə etməkdən daha yaxşıdır.
 
-Promises are a very clean alternative to callbacks, but ES2017/ES8 brings async and await
-which offer an even cleaner solution. All you need is a function that is prefixed
-in an `async` keyword, and then you can write your logic imperatively without
-a `then` chain of functions. Use this if you can take advantage of ES2017/ES8 features
-today!
+Promises'lər CallBack'lərə nəzərən yaxşı bir alternativdir, amma ES/17 və ES/18 gətirdiyi async və await konsepti bu iki (Promises, CallBack) daha yaxşıdır. Tək edilməli olan funksiyanin başına `async` yazmaq və sonra proqramı `then` zinciri istifadə etmədən yazmaqdır. Bu gün ES2017 / ES8 xüsusiyyətlərindən yararlana bilirsinizsə, ondan istifadə edib daha təmiz kod yazın!
 
-**Bad:**
+
+**Pis:**
 
 ```javascript
 import { get } from "request-promise";
@@ -1847,7 +1841,7 @@ get("https://en.wikipedia.org/wiki/Robert_Cecil_Martin")
   });
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 import { get } from "request-promise";
@@ -1868,25 +1862,19 @@ async function getCleanCodeArticle() {
 getCleanCodeArticle()
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Error Handling**
+## **Xətanın idarə edilməsi**
 
-Thrown errors are a good thing! They mean the runtime has successfully
-identified when something in your program has gone wrong and it's letting
-you know by stopping function execution on the current stack, killing the
-process (in Node), and notifying you in the console with a stack trace.
+Atılan səhvlər yaxşı bir şeydir! Bu o deməkdir ki, proqramınızda hər hansı bir xəta baş verdikdə icra müddətinin müvəffəqiyyətlə müəyyən edilməsi və onlar sizi cari yığında(stack)-də funksiyanı işə salacaq, funksiyanı dayandıracaq və konsolda xəta görüləcəkdir.
 
-### Don't ignore caught errors
+### Yaxalanan səhvlərə məhəl qoymayın
 
-Doing nothing with a caught error doesn't give you the ability to ever fix
-or react to said error. Logging the error to the console (`console.log`)
-isn't much better as often times it can get lost in a sea of things printed
-to the console. If you wrap any bit of code in a `try/catch` it means you
-think an error may occur there and therefore you should have a plan,
-or create a code path, for when it occurs.
+Tutulan xəta ilə heç nə etməmək sizə bu səhvi düzəltmək və ya ona reaksiya vermək imkanı vermir. Səhvləri konsolda qeyd etmək (`console.log`) konsolda çap edilmiş əşyalar dənizində itə biləcəyi qədər yaxşı deyil.
 
-**Bad:**
+Əgər siz try/catch'də hər hansı bir kod parçasından istifadə edirsinizsə, bu o deməkdir ki, siz orada səhv ola biləcəyini düşünürsünüz və buna görə də bunun baş verdiyi zaman üçün planınız olmalı və ya kod yolu yaratmalısınız.
+
+**Pis:**
 
 ```javascript
 try {
@@ -1896,28 +1884,27 @@ try {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 try {
   functionThatMightThrow();
 } catch (error) {
-  // One option (more noisy than console.log):
+  // Bir seçim (console.log-dan daha nəzərə çarpan)
   console.error(error);
-  // Another option:
+  // Başqa bir seçim:
   notifyUserOfError(error);
-  // Another option:
+  // Başqa bir seçim::
   reportErrorToService(error);
-  // OR do all three!
+  // edə bilirsinizsə bu üçüdə bir edilə bilər
 }
 ```
 
-### Don't ignore rejected promises
+### Rədd edilmiş promises'lərə məhəl qoymayın
 
-For the same reason you shouldn't ignore caught errors
-from `try/catch`.
+Eyni səbəblərə görə siz try/catch-də baş verən xətaları nəzərə almamalısınız.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 getdata()
@@ -1929,7 +1916,7 @@ getdata()
   });
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 getdata()
@@ -1947,26 +1934,24 @@ getdata()
   });
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Formatting**
+## **Formatlama**
 
-Formatting is subjective. Like many rules herein, there is no hard and fast
-rule that you must follow. The main point is DO NOT ARGUE over formatting.
-There are [tons of tools](https://standardjs.com/rules.html) to automate this.
-Use one! It's a waste of time and money for engineers to argue over formatting.
+Formatlaşdırma subyektivdir. Buradakı bir çox qaydalar kimi, çətin və sürətli yoxdur
+riayət etməli olduğunuz qayda. Əsas odur ki, formatla bağlı MÜBAHİSƏ ETMƏYİN.
+Bunu avtomatlaşdırmaq üçün [tonlarla alətlər](https://standardjs.com/rules.html) var.
+Birini istifadə edin! Mühəndislərin formatlama üzərində mübahisə etməsi vaxt və pul itkisidir.
 
-For things that don't fall under the purview of automatic formatting
-(indentation, tabs vs. spaces, double vs. single quotes, etc.) look here
-for some guidance.
+Avtomatik formatlaşdırmanın səlahiyyətlərinə aid olmayan şeylər üçün
+(gizinti, nişanlar və boşluqlar, ikiqat və tək dırnaqlar və s.) bura baxın
+bəzi rəhbərlik üçün.
 
-### Use consistent capitalization
+### Mənalı böyük hərflərdən istifadə edin
 
-JavaScript is untyped, so capitalization tells you a lot about your variables,
-functions, etc. These rules are subjective, so your team can choose whatever
-they want. The point is, no matter what you all choose, just be consistent.
+JavaScript tipsizdir, ona görə də kapitallaşma dəyişənləriniz, funksiyalarınız və s. Onun haqqında çox şey deyir. Komandanızın istədiklərini seçə bilməsi üçün bu qaydalar subyektivdir. Əsas odur ki, nə seçsəniz, ardıcıl olun.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 const DAYS_IN_WEEK = 7;
@@ -1982,7 +1967,7 @@ class animal {}
 class Alpaca {}
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 const DAYS_IN_WEEK = 7;
@@ -1998,15 +1983,15 @@ class Animal {}
 class Alpaca {}
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Function callers and callees should be close
+### Funksiya çağıranları ve çağrılanları yaxın olmalıdır
 
-If a function calls another, keep those functions vertically close in the source
-file. Ideally, keep the caller right above the callee. We tend to read code from
-top-to-bottom, like a newspaper. Because of this, make your code read that way.
+Əgər funksiya digərini çağırırsa, bu funksiyaları mənbədə şaquli olaraq yaxın saxlayın
+fayl. İdeal olaraq, zəng edəni zəng edənin üstündə saxlayın. Biz kodu oxumağa meyl edirik
+qəzet kimi yuxarıdan aşağıya. Buna görə kodunuzun oxunmasını təmin edin.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 class PerformanceReview {
@@ -2046,7 +2031,7 @@ const review = new PerformanceReview(employee);
 review.perfReview();
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 class PerformanceReview {
@@ -2086,37 +2071,37 @@ const review = new PerformanceReview(employee);
 review.perfReview();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## **Comments**
+## **Şərhlər**
 
-### Only comment things that have business logic complexity.
+### Yalnızca iş məntiqi qarışıq olan şeyləri şərhləyin
 
-Comments are an apology, not a requirement. Good code _mostly_ documents itself.
+Şərhlər yazmaq vacib deyil, yəni kodda mütləq şərh olmalıdır deyə bir qayda yoxdur. Yaxşı kod yazıldıqda onsuzda özünü şərhləyir.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 function hashIt(data) {
   // The hash
   let hash = 0;
 
-  // Length of string
+  // string'in uzunluğu
   const length = data.length;
 
-  // Loop through every character in data
+  // Datadaki hər simvolu döngüdən keçir
   for (let i = 0; i < length; i++) {
-    // Get character code.
+    // Simvol kodunu al
     const char = data.charCodeAt(i);
-    // Make the hash
+    // Qarışdır(Hashla)
     hash = (hash << 5) - hash + char;
-    // Convert to 32-bit integer
+    // 32-bit tam ədədə çevir
     hash &= hash;
   }
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function hashIt(data) {
@@ -2127,19 +2112,19 @@ function hashIt(data) {
     const char = data.charCodeAt(i);
     hash = (hash << 5) - hash + char;
 
-    // Convert to 32-bit integer
+    // 32-bit tam ədədə çevir
     hash &= hash;
   }
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Don't leave commented out code in your codebase
+### Kodlarınızı proqramda şərh olaraq buraxmayın
 
-Version control exists for a reason. Leave old code in your history.
+Versiya kontrol sisteminin (məs: GitHub) olmasının bir səbəbi var, Köhnə kodlariniz tarixin tozlu səhifələrinə həvalə edin.
 
-**Bad:**
+**Pis:**
 
 ```javascript
 doStuff();
@@ -2148,18 +2133,17 @@ doStuff();
 // doSoMuchStuff();
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 doStuff();
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Don't have journal comments
+### Jurnal şərhləri yazmayın
 
-Remember, use version control! There's no need for dead code, commented code,
-and especially journal comments. Use `git log` to get history!
+Unutmayın, versiya kontrol sistemindən istifadə edin! İstifadə edilməmiş koda, şərh edilmiş kodlara və xüsusən də log kodlarına ehtiyac yoxdur. Tarix üçün `git log` istifadə edin.
 
 **Pis:**
 
@@ -2175,7 +2159,7 @@ function combine(a, b) {
 }
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 function combine(a, b) {
@@ -2183,12 +2167,11 @@ function combine(a, b) {
 }
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-### Avoid positional markers
+### Mövqe işarələrindən çəkinin
 
-They usually just add noise. Let the functions and variable names along with the
-proper indentation and formatting give the visual structure to your code.
+Bunlar çox vaxt çirklənmə yaradır. Düzgün girinti və formatlaşdırma, həmçinin funksiyalar və dəyişən adlar kodunuza vizual quruluş versin.
 
 **Pis:**
 
@@ -2209,7 +2192,7 @@ const actions = function() {
 };
 ```
 
-**Good:**
+**Yaxşı:**
 
 ```javascript
 $scope.model = {
@@ -2222,13 +2205,14 @@ const actions = function() {
 };
 ```
 
-**[⬆ back to top](#table-of-contents)**
+**[⬆ Yuxarı Qalx](#Mündəricat)**
 
-## Translation
+## Tərcümələr
 
-This is also available in other languages:
+Həmçinin başqa dillərdə:
 
 - ![am](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Armenia.png) **Armenian**: [hanumanum/clean-code-javascript/](https://github.com/hanumanum/clean-code-javascript)
+- ![az](![Azerbaijan-Flag](https://user-images.githubusercontent.com/94697857/155020237-d9cf3149-a08d-4dbb-8991-9cdd23e3b379.png)) **Azerbaijani (Azərbaycanca)**: [ff-10/clean-code-javascript/](https://github.com/ff-10/clean-code-javascript)
 - ![bd](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Bangladesh.png) **Bangla(বাংলা)**: [InsomniacSabbir/clean-code-javascript/](https://github.com/InsomniacSabbir/clean-code-javascript/)
 - ![br](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/Brazil.png) **Brazilian Portuguese**: [fesnt/clean-code-javascript](https://github.com/fesnt/clean-code-javascript)
 - ![cn](https://raw.githubusercontent.com/gosquared/flags/master/flags/flags/shiny/24/China.png) **Simplified Chinese**:
