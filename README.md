@@ -13,7 +13,7 @@
 9. [Xətanın idarə edilməsi](#xətanın-idarə-edilməsi)
 10. [Formatlama](#formatlama)
 11. [Şərhlər](#şərhlər)
-12. [Tərcümə](#tərcümə)
+12. [Tərcümə](#tərcümələr)
 
 ## Giriş
 	
